@@ -32,10 +32,15 @@ From 1 to 100, the correct output should be:
 
 My neural network is classifying each number into one of four categories:
 
-    0. "Fizz"
-    1. "Buzz"
-    2. "FizzBuzz"
+    0. Fizz
+    1. Buzz
+    2. FizzBuzz
     3. None of the above
+
+## Required tools
+
+    import tensorflow as tf
+    import numpy as np
 
 ## Preparing Data
 I am encoding the X (input) values as 16-bit binary:
@@ -73,7 +78,7 @@ And encoding the Y (output) values as one-hot vectors:
 
 which will categorize the 16-bit binary input data as one of the 4 possible categories specified by the FizzBuzz rule.
 
-For example, if `[ 0.03 -0.4 -0.4  0.4]` is returned, the program knows not to print any of "Fizz", "Buzz", or "FizzBuzz":
+For example, if `[0.03 -0.4 -0.4  0.4]` is returned, the program knows not to print any of "Fizz", "Buzz", or "FizzBuzz":
 
     # decoding values of Y
     def one_hot_decode_array(x, y):
@@ -139,7 +144,7 @@ My model architecture is simple, with 100 hidden neurons in one layer:
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=Z))
     
     # define op
-    train_step = tf.train.AdamOptimizer(0.005).minimize(cross_entropy)
+    train_step = tf.train.AdamOptimizer(0.001).minimize(cross_entropy)
     
     # define accuracy
     correct_prediction = tf.equal(tf.argmax(Z, 1), tf.argmax(Y, 1))
@@ -163,7 +168,7 @@ For the sake of simplicity, I opted to omit batch training:
         print(decoded)
 
 ## Results
-After about 5,000 iterations of train step, training accuracy converges to 1.0. Here is the following test output of the trained neural network model after 10,000 iterations:
+After about 5,000 iterations of train step, training accuracy converges to 1.0. Here is the following test output of the neural network model after 10,000 iterations of training:
 
         0 : 0.346061
         1 : 0.459596
@@ -186,4 +191,4 @@ After about 5,000 iterations of train step, training accuracy converges to 1.0. 
          '83' 'Fizz' 'Buzz' '86' 'Fizz' '88' '89' 'FizzBuzz' '91' '92' 'Fizz' '94'
          'Buzz' 'Fizz' '97' '98' 'Fizz' 'Buzz']
 
-This model, despite its simplicity, without any prior information about the modulo operation, successfully extrapolated the output of the FizzBuzz function in the domain that was excluded in its training data.
+This feedforward neural network model, despite its simplicity, without a priori knowledge of the modulo operation, successfully extrapolated the output of the FizzBuzz function in the domain that was excluded in its training data.
