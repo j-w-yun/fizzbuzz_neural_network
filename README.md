@@ -192,3 +192,8 @@ After about 5,000 iterations of train step, training accuracy converges to 1.0. 
          'Buzz' 'Fizz' '97' '98' 'Fizz' 'Buzz']
 
 This feedforward neural network model, despite its simplicity, without a priori knowledge of the modulo operation, successfully extrapolated the output of the FizzBuzz function in the domain that was excluded in its training data.
+
+[Go to Part 2 : Improving Model Accuracy][1].
+
+
+  [1]: https://github.com/Jaewan-Yun/fizzbuzz_neural_network/tree/master/Part%202%20-%20Improving%20Model%20Accuracy
