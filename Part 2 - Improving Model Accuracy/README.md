@@ -10,7 +10,7 @@ In the previous experiment, the FizzBuzz function was approximated from 1 to 100
 
 ## Minor Revisions
 
-I am encoding the X (input) values as 20-bit binary, to support 1 million training elements:
+I am encoding the X (input) values as 20-bit binary to support 1 million training elements:
 
     # encoding values of X
     def binary_encode_20b_array(a):
@@ -79,7 +79,7 @@ This is how I am dividing up the training and testing data:
     train_y_raw = np.arange(train_x_start, train_x_end + 1)
     train_y = one_hot_encode_array(train_y_raw)
 
-so the model trains using values between 1,001 and 1,000,000 and tests using values between 1 and 1,000.
+The model trains using values between 1,001 and 1,000,000 and tests using values between 1 and 1,000.
 
 ## Neural Network Model
 
@@ -110,7 +110,7 @@ Therefore, there are three hidden layers:
     h3_b = tf.Variable(tf.constant(0.1, shape=[h3_dim]))
     h3_z = tf.nn.relu(tf.matmul(h2_z, h3_w) + h3_b)
 
-with dropout to the output of hidden layer #3:
+Add dropout to the output of hidden layer #3:
 
     keep_prob = tf.placeholder(tf.float32)
     h3_dropout = tf.nn.dropout(h3_z, keep_prob)
@@ -169,7 +169,7 @@ For all batchs of each epoch, train using data that is shuffled each epoch, in b
         # get output of test data
         output = sess.run(Z, feed_dict={X: test_x, keep_prob:1.0})
 
-Note that probability of dropout is `1.0-keep_prob`, which in this case is 50% for training. Test accuracy converges to 1.0 before training accuracy, im my experience.
+Note that probability of dropout is `1.0-keep_prob`, which in this case is 50% during training.
 
 ## Results
 
@@ -187,10 +187,12 @@ Note that probability of dropout is `1.0-keep_prob`, which in this case is 50% f
     Epoch: 236 train accuracy: 0.989605 test accuracy: 0.998
     Epoch: 237 train accuracy: 0.986278 test accuracy: 1.0
 
-Going further, both training and test performance reach 100% accuracy.
+    ...
 
     Epoch: 1293 train accuracy: 1.0 test accuracy: 1.0
     Epoch: 1294 train accuracy: 1.0 test accuracy: 1.0
     Epoch: 1295 train accuracy: 1.0 test accuracy: 1.0
     Epoch: 1296 train accuracy: 1.0 test accuracy: 1.0
     Epoch: 1297 train accuracy: 1.0 test accuracy: 1.0
+
+By the 1293rd epoch, both train and test performance reach 100% accuracy.
